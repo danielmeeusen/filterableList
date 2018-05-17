@@ -26,6 +26,9 @@
                 <a href="#">Alan</a>
             </li>
             <li class="collection-item">
+                <a href="#">Alex</a>
+            </li>
+            <li class="collection-item">
                 <a href="#">Anna</a>
             </li>
             <li class="collection-header">
@@ -66,16 +69,18 @@
         filterInput.addEventListener('keyup', filterNames);
 
         function filterNames() {
-            let filterValue = document.getElementById('filterInput').value.toUpperCase();
+            let filterValue = document.getElementById('filterInput').value;
             
             let ul = document.getElementById('names');
 
             let li = ul.querySelectorAll('li.collection-item');
 
+            let regex = new RegExp('^' + filterValue, 'i');
+            
             for (i=0; i < li.length; i++) {
                 let a = li[i].getElementsByTagName('a')[0];
-
-                if(a.innerHTML.toUpperCase().indexOf(filterValue) > -1) {
+                
+                if(a.innerHTML.match(regex)) {
                     li[i].style.display= '';
                 } else {
                     li[i].style.display = 'none';
