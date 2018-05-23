@@ -1,6 +1,10 @@
 
 let filterInput = document.getElementById('filterInput');
 
+if (filterInput === '') {
+    document.getElementById('addContact').style.display = 'none';
+}
+
 document.getElementById('contactForm').addEventListener('submit', function(event){
     event.preventDefault();
     addContact();
@@ -35,16 +39,12 @@ let contacts = {
     Z:[]            
 };
 
-
-let names ='';
-
 generateList();
-
-document.getElementById('names').innerHTML = names;
 
 filterInput.addEventListener('keyup', filterNames);
 
-function generateList(){    
+function generateList(){   
+    let names =''; 
 
     if (localStorage.getItem('contacts') !== null) {
         contacts = JSON.parse(localStorage.getItem('contacts'));
@@ -52,49 +52,54 @@ function generateList(){
 
     for (x in contacts) {
         if (contacts[x].length > 0){
-            names += `<li class="collection-header">
-            <h5> ${x} </h5>
-            </li>`
+            names += '<li class="collection-header">' +
+            '<h5>' + x + '</h5>' +
+            '</li>';
 
             var sorted = contacts[x].sort();
 
-            sorted.forEach(function(e){
-                names += `<li class="collection-item">
-                <div class="item-name">
-                <a class="item-name" href="#"> ${e}</a>
-                </div>
-                <a href="#" onclick="removeContact('${e}')">X</a>
-                </li>`;
+            sorted.forEach((e) => {
+                let n = `'${e}'`;
+
+                names += '<li class="collection-item">' +
+                '<a href="#">' + e + '</a>' +
+                '<a href="#" onclick="removeContact(' + n + ')"> X </a>' +
+                '</li>';
             });                   
         }   
     }
+
+    document.getElementById('names').innerHTML = names;
+
 }
 
+
 function filterNames() {
+
     let filterValue = document.getElementById('filterInput').value;  
 
     let ul = document.getElementById('names');
 
     let li = ul.querySelectorAll('li.collection-item');
-    console.log(li);
 
     let regex = new RegExp('^' + filterValue, 'i');
 
     for (i=0; i < li.length; i++) {
+
         let a = li[i].getElementsByTagName('a')[0];
-        
+
         if(a.innerHTML.match(regex)) {
             li[i].style.display= '';
-
         } else {
             li[i].style.display = 'none';
         }
+
     }
 
     let liArr = [];
 
     li.forEach((e) => {
-    liArr.push(e.style);
+        liArr.push(e.style);
     });
 
     let displayArr = [];
@@ -105,6 +110,9 @@ function filterNames() {
 
     if(displayArr.every((item) => {return item === 'none'})) {
         document.getElementById('addContact').style.display = 'initial';
+    } else {
+        document.getElementById('addContact').style.display = 'none';
+
     }
 }
 
@@ -120,9 +128,24 @@ function addContact() {
 
     document.getElementById('contactForm').reset();
 
-    location.reload();
+    generateList();
 }
 
 function removeContact(name) {
-    console.log(name);
+    let names = contacts[name.charAt(0)];
+
+    let nameRemoved = names;
+
+    let toRemove = names.indexOf(name);
+
+    nameRemoved.splice(toRemove, 1);
+
+    contacts[name.charAt(0)] = nameRemoved; 
+    
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+
+    generateList();
+
+    filterInput.blur();
+    
 }
