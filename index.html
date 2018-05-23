@@ -7,86 +7,23 @@
     <title>My Contacts</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
     <div class="container">
         <h1 class="center-align">My contacts</h1>
-        <input type="text" id="filterInput" placeholder="Search names...">
+        <form id="contactForm">
+        <input type="text" id="filterInput" placeholder="Search contacts..."></input>
+        
+        <button type="submit" id="addContact" class="waves-effect waves-light btn">Add Contact</button>
+    </form>
+
     <ul id="names" class="collection with-header">
-        <li class="collection-header">
-            <h5>A</h5>
-            </li>
-            <li class="collection-item">
-                <a href="#">Abe</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Adam</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Alan</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Alex</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Anna</a>
-            </li>
-            <li class="collection-header">
-                <h5>B</h5>
-                </li>
-                <li class="collection-item">
-                    <a href="#">Beth</a>
-                </li>
-                <li class="collection-item">
-                    <a href="#">Bill</a>
-                </li>
-                <li class="collection-item">
-                    <a href="#">Bob</a>
-                </li>
-                <li class="collection-item">
-                    <a href="#">Brad</a>
-                </li>
-                <li class="collection-header">
-                    <h5>C</h5>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#">Carrie</a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#">Cathy</a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#">Courtney</a>
-                    </li>
-                    <li class="collection-item">
-                        <a href="#">Chris</a>
-                    </li>
+        
         </ul>
     </div>
-    <script>
-        let filterInput = document.getElementById('filterInput');
-
-        filterInput.addEventListener('keyup', filterNames);
-
-        function filterNames() {
-            let filterValue = document.getElementById('filterInput').value;
-            
-            let ul = document.getElementById('names');
-
-            let li = ul.querySelectorAll('li.collection-item');
-
-            let regex = new RegExp('^' + filterValue, 'i');
-            
-            for (i=0; i < li.length; i++) {
-                let a = li[i].getElementsByTagName('a')[0];
-                
-                if(a.innerHTML.match(regex)) {
-                    li[i].style.display= '';
-                } else {
-                    li[i].style.display = 'none';
-                }
-            }
-        }
-    </script>
+    <script src='/index.js'></script>
 </body>
 </html>
