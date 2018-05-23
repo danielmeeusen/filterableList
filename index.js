@@ -68,11 +68,8 @@ function generateList(){
             });                   
         }   
     }
-
     document.getElementById('names').innerHTML = names;
-
 }
-
 
 function filterNames() {
 
@@ -112,13 +109,16 @@ function filterNames() {
         document.getElementById('addContact').style.display = 'initial';
     } else {
         document.getElementById('addContact').style.display = 'none';
-
     }
 }
 
 function addContact() {
 
     let filterInput = document.getElementById('filterInput').value;  
+
+     if (document.getElementById('addContact').style.display === 'none') {
+         return false;
+     } else {
 
     let contactVal = filterInput.charAt(0).toUpperCase() + filterInput.substr(1);
 
@@ -129,6 +129,7 @@ function addContact() {
     document.getElementById('contactForm').reset();
 
     generateList();
+    }
 }
 
 function removeContact(name) {
