@@ -1,4 +1,3 @@
-
 let filterInput = document.getElementById('filterInput');
 
 if (filterInput === '') {
@@ -39,25 +38,35 @@ let contacts = {
     Z:[]            
 };
 
-generateList();
+if (localStorage.getItem('contacts') !== null) {
+    contacts = JSON.parse(localStorage.getItem('contacts'));
+}  
+
+generateList(contacts);
 
 filterInput.addEventListener('keyup', filterNames);
 
-function generateList(){   
+function generateList(obj, search){   
     let names =''; 
 
-    if (localStorage.getItem('contacts') !== null) {
-        contacts = JSON.parse(localStorage.getItem('contacts'));
-    }  
-
-    for (x in contacts) {
-        if (contacts[x].length > 0){
+    for (x in obj) {
+        if (obj[x].length > 0){
             names += '<li class="collection-header" style="background-color: #63d7cb">' +
             '<h5>' + x + '</h5>' +
             '</li>';
 
-            var sorted = contacts[x].sort();
-
+            var sorted = obj[x].sort();
+            if (search !== undefined) {
+                
+                sorted.forEach((e) => {
+                    let n = `'${e}'`;
+    
+                    names += '<li class="collection-item">' +
+                    '<a href="#"><b>' + search + '</b>' + e.substr(search.length) + '</a>' +
+                    '<a href="#" style="font-size:20px" onclick="removeContact(' + n + ')"> X </a>' +
+                    '</li>';
+                });      
+            } else {
             sorted.forEach((e) => {
                 let n = `'${e}'`;
 
@@ -65,7 +74,8 @@ function generateList(){
                 '<a href="#">' + e + '</a>' +
                 '<a href="#" style="font-size:20px" onclick="removeContact(' + n + ')"> X </a>' +
                 '</li>';
-            });                   
+            });      
+        }             
         }   
     }
     document.getElementById('names').innerHTML = names;
@@ -73,77 +83,36 @@ function generateList(){
 
 function filterNames() {
 
-    generateList();
-
     let filterValue = document.getElementById('filterInput').value;  
 
-    let ul = document.getElementById('names');
+    let firstVal = filterValue.substr(0, 1).toUpperCase();
 
-    let li = ul.querySelectorAll('li.collection-item');
+    let capFilVal = firstVal + filterValue.substr(1);
 
     let regex = new RegExp('^' + filterValue, 'i');
 
-    let upperFirst = filterValue.substr(0, 1).toUpperCase();
+    let filteredContacts = {};
 
-    if (filterValue.length > 0) {
+    
+       for (x in contacts) {
 
-        for(i=0; i < li.length; i++) {
-            li[i].style.display = 'none';
-        }
-
-        let contactFirst = contacts[upperFirst];
-        console.log(contactFirst);
-
-        for (i=0; i < contactFirst.length; i++) {
-
-            let a = li[i].getElementsByTagName('a')[0];
-
-            if (contactFirst[i].match(regex)) {
-                li[i].style.display= '';
-                let lower = filterValue.substr(1);
-                let first = upperFirst + lower;
-                let rest = contactFirst[i].substr(filterValue.length);
-                a.innerHTML = '<b>' + first + '</b>' + rest;               
-            } else {
-                li[i].style.display = 'none';
+        contacts[x].forEach((e) => {
+            if(e.match(regex)){
+                if (!filteredContacts[x]) {
+                filteredContacts[x] = [e];
+                } else {
+                filteredContacts[x].push(e);
+                }
             }
-
-        }
-    // Whether or not to show add contact button
-        let liArr = [];
-
-        li.forEach((e) => {
-            liArr.push(e.style);
         });
-
-        let displayArr = [];
-
-        liArr.forEach((e) => {
-            displayArr.push(e.display);
-        });
-
-        if(displayArr.every((item) => {return item === 'none'})) {
-            document.getElementById('addContact').style.display = 'initial';
-        } else {
-            document.getElementById('addContact').style.display = 'none';
-        }
-
-    } else {
-        generateList();
     }
-}
-
-function boldSearched(str) {
-
-    let filterValue = document.getElementById('filterInput').value;  
-
-    let regex = new RegExp('^' + filterValue, 'i');
-
-    let rest = a.innerHTML.substr(filterValue.length);
-    let upper = filterValue.substr(0, 1).toUpperCase();
-    let lower = filterValue.substr(1);
-    a.innerHTML = '<b>' + upper + lower + '</b>' + rest;
-    console.log(lower);
+    generateList(filteredContacts, capFilVal);
+    
+    if(filterValue.length > 0 && Object.keys(filteredContacts).length === 0) {
+        document.getElementById('addContact').style.display = 'block';
+    } else {
+        document.getElementById('addContact').style.display = 'none';
+    }
 }
 
 function addContact() {
@@ -162,7 +131,7 @@ function addContact() {
 
     document.getElementById('contactForm').reset();
 
-    generateList();
+    generateList(contacts);
     }
 }
 
@@ -179,8 +148,7 @@ function removeContact(name) {
     
     localStorage.setItem('contacts', JSON.stringify(contacts));
 
-    generateList();
+    generateList(contacts);
 
     filterInput.blur();
-    
 }
