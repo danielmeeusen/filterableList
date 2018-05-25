@@ -2,14 +2,13 @@ html, body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: rgb(223, 223, 223);
+    background-color: rgb(225, 225, 225);
 }
 
 #header {
     background-color: #00756c;
     margin: 0;
     padding: 0;
-    height: 200px;
 }
 
 .center {
@@ -22,7 +21,7 @@ html, body {
     margin-left: 30%;
     margin-right: 30%;
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
 }
@@ -43,8 +42,9 @@ html, body {
 }
 
 #names {
-    margin-top: 25px;
+    margin-top: 20px;
     flex: 1 0 auto;
+    margin-bottom: 40px;
 }
 
 .collection {
@@ -61,7 +61,7 @@ html, body {
     flex-shrink: 0;
     padding-bottom: 0;
     margin-bottom: 0;
-    height: 45px;;
+    height: 40px;;
     background-color: #25a59a;
 }
 
