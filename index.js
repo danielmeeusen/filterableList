@@ -52,7 +52,7 @@ function generateList(){
 
     for (x in contacts) {
         if (contacts[x].length > 0){
-            names += '<li class="collection-header">' +
+            names += '<li class="collection-header" style="background-color: #63d7cb">' +
             '<h5>' + x + '</h5>' +
             '</li>';
 
@@ -63,7 +63,7 @@ function generateList(){
 
                 names += '<li class="collection-item">' +
                 '<a href="#">' + e + '</a>' +
-                '<a href="#" onclick="removeContact(' + n + ')"> X </a>' +
+                '<a href="#" style="font-size:20px" onclick="removeContact(' + n + ')"> X </a>' +
                 '</li>';
             });                   
         }   
@@ -73,6 +73,8 @@ function generateList(){
 
 function filterNames() {
 
+    generateList();
+
     let filterValue = document.getElementById('filterInput').value;  
 
     let ul = document.getElementById('names');
@@ -81,46 +83,78 @@ function filterNames() {
 
     let regex = new RegExp('^' + filterValue, 'i');
 
-    for (i=0; i < li.length; i++) {
+    let upperFirst = filterValue.substr(0, 1).toUpperCase();
 
-        let a = li[i].getElementsByTagName('a')[0];
+    if (filterValue.length > 0) {
 
-        if(a.innerHTML.match(regex)) {
-            li[i].style.display= '';
-        } else {
+        for(i=0; i < li.length; i++) {
             li[i].style.display = 'none';
         }
 
-    }
+        let contactFirst = contacts[upperFirst];
+        console.log(contactFirst);
 
-    let liArr = [];
+        for (i=0; i < contactFirst.length; i++) {
 
-    li.forEach((e) => {
-        liArr.push(e.style);
-    });
+            let a = li[i].getElementsByTagName('a')[0];
 
-    let displayArr = [];
+            if (contactFirst[i].match(regex)) {
+                li[i].style.display= '';
+                let lower = filterValue.substr(1);
+                let first = upperFirst + lower;
+                let rest = contactFirst[i].substr(filterValue.length);
+                a.innerHTML = '<b>' + first + '</b>' + rest;               
+            } else {
+                li[i].style.display = 'none';
+            }
 
-    liArr.forEach((e) => {
-        displayArr.push(e.display);
-    });
+        }
+    // Whether or not to show add contact button
+        let liArr = [];
 
-    if(displayArr.every((item) => {return item === 'none'})) {
-        document.getElementById('addContact').style.display = 'initial';
+        li.forEach((e) => {
+            liArr.push(e.style);
+        });
+
+        let displayArr = [];
+
+        liArr.forEach((e) => {
+            displayArr.push(e.display);
+        });
+
+        if(displayArr.every((item) => {return item === 'none'})) {
+            document.getElementById('addContact').style.display = 'initial';
+        } else {
+            document.getElementById('addContact').style.display = 'none';
+        }
+
     } else {
-        document.getElementById('addContact').style.display = 'none';
+        generateList();
     }
+}
+
+function boldSearched(str) {
+
+    let filterValue = document.getElementById('filterInput').value;  
+
+    let regex = new RegExp('^' + filterValue, 'i');
+
+    let rest = a.innerHTML.substr(filterValue.length);
+    let upper = filterValue.substr(0, 1).toUpperCase();
+    let lower = filterValue.substr(1);
+    a.innerHTML = '<b>' + upper + lower + '</b>' + rest;
+    console.log(lower);
 }
 
 function addContact() {
 
-    let filterInput = document.getElementById('filterInput').value;  
+    let filterValue = document.getElementById('filterInput').value;  
 
      if (document.getElementById('addContact').style.display === 'none') {
          return false;
      } else {
 
-    let contactVal = filterInput.charAt(0).toUpperCase() + filterInput.substr(1);
+    let contactVal = filterValue.charAt(0).toUpperCase() + filterValue.substr(1);
 
     contacts[contactVal[0]].push(contactVal);
 
