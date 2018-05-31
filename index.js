@@ -1,14 +1,17 @@
 let filterInput = document.getElementById('filterInput');
 
+//makes sure that if there is no text in the search box the 'addcontact' button will not appear
 if (filterInput === '') {
     document.getElementById('addContact').style.display = 'none';
 }
 
+// create event listener if form is submitted
 document.getElementById('contactForm').addEventListener('submit', function(event){
     event.preventDefault();
     addContact();
 });
 
+//initial object local memory will be set to if no previous object is found
 let contacts = {
     A:[],
     B:[],
@@ -38,14 +41,22 @@ let contacts = {
     Z:[]            
 };
 
+// if no object called 'contacts' is found in local storage add the contacts object above
 if (localStorage.getItem('contacts') !== null) {
     contacts = JSON.parse(localStorage.getItem('contacts'));
 }  
 
+// runs our main  function
 generateList(contacts);
 
+// add event listener to run filterNames function on keyup
 filterInput.addEventListener('keyup', filterNames);
 
+/* 
+function sorts and iterates contacts object to translate and publish it into readable html.
+
+Takes to args: 'obj' is the contacts object to be displayed filtered or original,'search' is the string entered in the search form to be bolded in results, if a string is entered
+*/
 function generateList(obj, search){   
     let names =''; 
 
@@ -56,6 +67,7 @@ function generateList(obj, search){
             '</li>';
 
             var sorted = obj[x].sort();
+					//bolded
             if (search !== undefined) {
                 
                 sorted.forEach((e) => {
@@ -66,6 +78,7 @@ function generateList(obj, search){
                     '<a href="#" style="font-size:20px" onclick="removeContact(' + n + ')"> X </a>' +
                     '</li>';
                 });      
+							//un-bolded
             } else {
             sorted.forEach((e) => {
                 let n = `'${e}'`;
@@ -78,9 +91,11 @@ function generateList(obj, search){
         }             
         }   
     }
+	// populate html script to html file
     document.getElementById('names').innerHTML = names;
 }
 
+// function called during keyup to filter and bold names.
 function filterNames() {
 
     let filterValue = document.getElementById('filterInput').value;  
@@ -91,11 +106,12 @@ function filterNames() {
 
     let regex = new RegExp('^' + filterValue, 'i');
 
+	// temporary object where filtered names are stored to be run through generate list function and shown
     let filteredContacts = {};
 
     
        for (x in contacts) {
-
+				 
         contacts[x].forEach((e) => {
             if(e.match(regex)){
                 if (!filteredContacts[x]) {
@@ -106,8 +122,10 @@ function filterNames() {
             }
         });
     }
+	// generate list function called with temporarily stored filtered contact object and search term
     generateList(filteredContacts, capFilVal);
     
+	// if text is entered in to search that does not match text in contacts object, show 'addcontact' button, else don't show it.
     if(filterValue.length > 0 && Object.keys(filteredContacts).length === 0) {
         document.getElementById('addContact').style.display = 'block';
     } else {
@@ -115,6 +133,7 @@ function filterNames() {
     }
 }
 
+// function to add name to contacts list and store it in localStorage
 function addContact() {
 
     let filterValue = document.getElementById('filterInput').value;  
@@ -135,6 +154,7 @@ function addContact() {
     }
 }
 
+// function to remove name to contacts list and store it in localStorage
 function removeContact(name) {
     let names = contacts[name.charAt(0)];
 
@@ -149,6 +169,4 @@ function removeContact(name) {
     localStorage.setItem('contacts', JSON.stringify(contacts));
 
     generateList(contacts);
-
-    filterInput.blur();
 }
