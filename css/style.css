@@ -3,6 +3,7 @@ html, body {
     flex-direction: column;
     height: 100%;
     background-color: rgb(225, 225, 225);
+		min-width: 360px;
 }
 
 #header {
@@ -18,8 +19,8 @@ html, body {
 }
 
 #contactForm {
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-left: 25%;
+    margin-right: 25%;
     margin-top: 0;
     margin-bottom: 15px;
     display: flex;
@@ -44,25 +45,46 @@ html, body {
 #names {
     margin-top: 20px;
     flex: 1 0 auto;
-    margin-bottom: 40px;
+	  margin-bottom: 20%;
 }
 
-.collection {
-    margin-left: 30%;
-    margin-right: 30%;
+.collection-header {
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
-.collection-item {
-    display: flex;
+.itemCont {
+	transition: all .2s ease-in-out;
+	margin-left: 25%;
+  margin-right: 25%;
+	border: solid .5px lightgrey;
+}
+
+.itemCont:hover {
+	transform: scale(1.1); 
+}
+
+.collection-item {	  
+		display: flex;
     justify-content: space-between;
+		font-size: 16px;
+}
+
+a {
+		color: black;
 }
 
 .footer {
-    flex-shrink: 0;
-    padding-bottom: 0;
-    margin-bottom: 0;
-    height: 40px;;
-    background-color: #25a59a;
+	flex-shrink: 0;
+  background: #25a59a;
+	line-height: 0px;
+  color: rgba(0, 0, 0, .85);
+  text-align: center;
+  height: 40px;
+}
+
+.footer a:hover {
+	color: white;
 }
 
 h1 {
@@ -73,12 +95,15 @@ h5 {
     line-height: 0px;
 }
 
-a {
-    font-size: 18px;
-    color: black;
+@media (max-width: 620px){
+	.collection {
+  	margin-left: 15%;
+  	margin-right: 15%;
+	}
+	#contactForm {
+    margin-left: 15%;
+    margin-right: 15%;
+	}
 }
 
-p {
-    font-size: 18px;
-    line-height: 0px;
-}
+
