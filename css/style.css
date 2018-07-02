@@ -3,7 +3,7 @@ html, body {
     flex-direction: column;
     height: 100%;
     background-color: rgb(225, 225, 225);
-		min-width: 360px;
+    min-width: 360px;
 }
 
 #header {
@@ -43,20 +43,22 @@ html, body {
 }
 
 #names {
-    margin-top: 20px;
-    flex: 1 0 auto;
-	  margin-bottom: 20%;
+	border: none !important;
+	margin-top: 20px;
+	flex: 1 0 auto;
+	margin-bottom: 5%;
 }
 
 .collection-header {
-  margin-left: 25%;
-  margin-right: 25%;
+    padding: 5px 25px !important;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 .itemCont {
 	transition: all .2s ease-in-out;
 	margin-left: 25%;
-  margin-right: 25%;
+    margin-right: 25%;
 	border: solid .5px lightgrey;
 }
 
@@ -65,13 +67,14 @@ html, body {
 }
 
 .collection-item {	  
-		display: flex;
+    background-color: #fafafa !important;
+    display: flex;
     justify-content: space-between;
-		font-size: 16px;
+    font-size: 16px;
 }
 
 a {
-		color: black;
+    color: black !important;
 }
 
 .footer {
@@ -96,13 +99,22 @@ h5 {
 }
 
 @media (max-width: 620px){
-	.collection {
-  	margin-left: 15%;
-  	margin-right: 15%;
-	}
 	#contactForm {
     margin-left: 15%;
     margin-right: 15%;
+}
+	
+	.collection-header {
+		padding: 5px 25px !important;
+		margin-left: 15%;
+		margin-right: 15%;
+	}
+
+	.itemCont {
+			transition: all .2s ease-in-out;
+			margin-left: 15%;
+			margin-right: 15%;
+			border: solid .5px lightgrey;
 	}
 }
 
