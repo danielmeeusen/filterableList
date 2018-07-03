@@ -3,7 +3,7 @@ html, body {
     flex-direction: column;
     height: 100%;
     background-color: rgb(225, 225, 225);
-    min-width: 360px;
+	min-width: 340px;
 }
 
 #header {
@@ -14,13 +14,13 @@ html, body {
 
 .center {
     margin: 0;
-    padding-top: 40px;;
-    padding-bottom: 30px;
+    padding-top: 30px;;
+    padding-bottom: 20px;
 }
 
 #contactForm {
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-left: 35%;
+    margin-right: 35%;
     margin-top: 0;
     margin-bottom: 15px;
     display: flex;
@@ -28,9 +28,10 @@ html, body {
 }
 
 #filterInput {
+    padding-left: 10px;
 	font-size: 18px;
     color: white;
-    margin: 0;
+    margin-bottom: 0;
 }
 
 #addContact {
@@ -50,15 +51,24 @@ html, body {
 }
 
 .collection-header {
-    padding: 5px 25px !important;
-    margin-left: 25%;
-    margin-right: 25%;
+    background-color: #63d7cb !important;
+    height: 40px !important;
+    padding-left: 25px !important;
+    padding-bottom: 0px !important;
+    margin-left: 35%;
+    margin-right: 35%;
+    margin-bottom: -1px;
+}
+
+h5 {
+    font-size: 22px !important;
+    line-height: 0px !important;
 }
 
 .itemCont {
 	transition: all .2s ease-in-out;
-	margin-left: 25%;
-    margin-right: 25%;
+	margin-left: 35%;
+    margin-right: 35%;
 	border: solid .5px lightgrey;
 }
 
@@ -79,12 +89,13 @@ a {
 
 .footer {
 	flex-shrink: 0;
-  background: #25a59a;
-	line-height: 0px;
-  color: rgba(0, 0, 0, .85);
-  text-align: center;
-  height: 40px;
+    background: #25a59a;
+    line-height: 0px;
+    color: rgba(0, 0, 0, .85);
+    text-align: center;
+    height: 40px;
 }
+
 
 .footer a:hover {
 	color: white;
@@ -94,27 +105,49 @@ h1 {
 	color: white;
 }
 
-h5 {
-    line-height: 0px;
-}
-
-@media (max-width: 620px){
+@media (max-width: 1400px){
 	#contactForm {
-    margin-left: 15%;
-    margin-right: 15%;
+        margin-left: 25%;
+        margin-right: 25%;
 }
 	
 	.collection-header {
 		padding: 5px 25px !important;
-		margin-left: 15%;
-		margin-right: 15%;
+		margin-left: 25%;
+		margin-right: 25%;
 	}
 
 	.itemCont {
-			transition: all .2s ease-in-out;
-			margin-left: 15%;
-			margin-right: 15%;
-			border: solid .5px lightgrey;
+        transition: all .2s ease-in-out;
+        margin-left: 25%;
+        margin-right: 25%;
+        border: solid .5px lightgrey;
+	}
+}
+
+@media (max-width: 600px){
+    .center {
+        padding-top: 10px;;
+        padding-bottom: 10px;
+    }
+	#contactForm {
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: 0%;
+        margin-right: 0%;
+}
+	
+	.collection-header {
+		padding: 5px 25px !important;
+		margin-left: 0%;
+		margin-right: 0%;
+	}
+
+	.itemCont {
+        transition: all .2s ease-in-out;
+        margin-left: 0%;
+        margin-right: 0%;
+        border: solid .5px lightgrey;
 	}
 }
 
